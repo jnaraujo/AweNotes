@@ -1,0 +1,42 @@
+{
+  "name": "notes.jnaraujo.com",
+  "author": "jnaraujo",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@hcaptcha/react-hcaptcha": "^1.1.0",
+    "@mui/material": "^5.4.1",
+    "axios": "^0.26.0",
+    "classnames": "^2.3.1",
+    "next": "12.0.10",
+    "next-seo": "^5.1.0",
+    "nookies": "^2.5.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-notion": "^0.10.0",
+    "react-responsive-modal": "^6.2.0",
+    "react-toastify": "^8.1.1",
+    "sass": "^1.49.7",
+    "styled-components": "^5.3.3",
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.22",
+    "@types/classnames": "^2.3.1",
+    "@types/next-seo": "^2.1.2",
+    "@types/nookies": "^2.0.3",
+    "@emotion/babel-plugin": "^11.7.2",
+    "@types/node": "^17.0.18",
+    "babel-plugin-styled-components": "^2.0.2",
+    "eslint": "8.9.0",
+    "eslint-config-next": "^12.0.10"
+  }
+}
