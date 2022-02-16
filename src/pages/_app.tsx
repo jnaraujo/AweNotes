@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import { LinearProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 
+import ThemeProvider from 'src/context/ThemeContext';
+
 // eslint-disable-next-line react/prop-types
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -40,7 +42,9 @@ function MyApp({ Component, pageProps }) {
         width: '100%',
         zIndex: 999
       }} /> : ''}
-      <Component {...pageProps} />
+      <ThemeProvider>
+        <Component {...pageProps} />
+      </ThemeProvider>
     </>
   )
 }
