@@ -2,6 +2,14 @@
   <h1>📝 AweNotes</h1>
 </div>
 
+<div align="center">
+  
+  ![GitHub](https://img.shields.io/github/license/jnaraujo/AweNotes)
+  [![Website notes.jnaraujo.com](https://img.shields.io/website-up-down-green-red/http/notes.jnaraujo.com.svg)](https://notes.jnaraujo.com/)
+  ![Most used language](https://img.shields.io/github/languages/top/jnaraujo/awenotes?style=flat-square)
+  
+</div>
+
 Um site de notas simples, minimalista e fácil onde você pode criar, modificar e compartilhar notas com qualquer pessoas, a qualquer hora 🤞
 Feito totalmente em React, NextJS e TypeScript 🥳
 
