@@ -44,12 +44,19 @@ export default function Navbar() {
                     margin: 0;
                     padding: 0;
 
+                    padding: 8px 0;
+
+                    @media (min-width: 900px) {
+                        padding: 16px 0;
+                    }
+
                     text-align: center;
 
                     font-family: ${theme.font.family};
 
                     h1{
                         color: ${theme.pallet.primary};
+                        font-size: 20px;
                     }
                     .themeChange{
                         display: flex;
