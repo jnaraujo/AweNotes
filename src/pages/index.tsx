@@ -5,26 +5,33 @@ import React, { useEffect, useRef, useState } from 'react';
 import { DefaultSeo } from 'next-seo';
 import { Grid } from '@mui/material';
 
-import { useRouter } from 'next/router';
-
-import { BsPencilFill } from 'react-icons/bs';
-import { IoMdShareAlt } from 'react-icons/io';
-import { MdDelete } from 'react-icons/md';
 
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import axios from 'axios';
-import Navbar from 'src/components/Navbar';
-
 
 // COMPONENTS
+import Navbar from '@components/Navbar';
+import Note from '@components/Note';
+
+// CONTEXTS
+import { useTheme } from '@context/ThemeContext';
 
 export default function Home() {
+  const {theme} = useTheme();
+
+  const [note, setNote] = useState({
+      title: '',
+      text: '',
+      author: '',
+      isEditable: true
+  });
+
   return (
     <>
     <DefaultSeo
-      title="Teste de Leiturabilidade"
-      description="Saiba em tempo real e de graça o quão fácil de ser lido seu texto é."
+      title="Notes - Escreva suas ideias e compartilhe com o mundo."
+      description="Escreva suas ideias e compartilhe com o mundo. Totalmente grátis, fácil e sem limites."
       additionalLinkTags={
         [
             {
@@ -34,10 +41,19 @@ export default function Home() {
         ]
       }
     />
-    <div className={styles.home}>
+    <div className={styles.home} style={{
+        backgroundColor: `${theme.pallet.background}`,
+    }}>
       <div className={styles.navbar}>
         <Navbar />
       </div>
+      <Grid container justifyContent={"center"} className={styles.note_container}>
+        <Grid item xs={11} md={6} lg={5}>
+          <div className={styles.note}>
+            <Note title={note.title} text={note.text} author={note.author} isEditable={note.isEditable}></Note>
+          </div>
+        </Grid>
+      </Grid>
     </div>
     </>
   )
