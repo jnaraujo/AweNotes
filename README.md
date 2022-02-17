@@ -1,4 +1,7 @@
-# 📝 AweNotes
+<div align="center" >
+  <h1>📝 AweNotes</h1>
+</div>
+
 Um site de notas simples, minimalista e fácil onde você pode criar, modificar e compartilhar notas com qualquer pessoas, a qualquer hora 🤞
 Feito totalmente em React, NextJS e TypeScript 🥳
 ![git da interface do AweNotes](/public//gif_interface.webp)
@@ -26,6 +29,11 @@ yarn install
 ```sh
 yarn dev
 ```
+
+<div align="center" >
+  <img src="/public/gif_interface2.webp">
+  <img src="/public/interface3.png">
+</div>
 
 ## 📚 TODO
 
