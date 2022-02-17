@@ -4,3 +4,15 @@
 .aweHidden{
     opacity: 0;
 }
+
+.note_container{
+    margin-top: 50px;
+    .note{
+        max-width: 900px;
+        margin: 0 auto;
+    }
+}
+
+.home{
+    min-height: 100vh;
+}
