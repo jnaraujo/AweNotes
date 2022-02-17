@@ -1,8 +1,14 @@
 interface ThemeInterface{
+    name: string;
     pallet: {
         title: string;
+
         text: string;
+        textPlaceholder: string;
+        
         background: string;
+
+        primary: string;
     }
     font: {
         family: string;
@@ -12,15 +18,32 @@ interface ThemeInterface{
 export type {ThemeInterface}
 
 export const lightTheme : ThemeInterface = {
+    name: 'light',
     pallet: {
-        title: '#979797',
+        title: '#7A7A7A',
         text: '#979797',
+        textPlaceholder: '#C4C4C4',
+
         background: '#F8F9FA',
+        primary: '#161616',
     },
     font: {
         family: 'Inter',
     }
 }
-  
-// export const darkTheme : ThemeInterface = {
-// }
+
+export const darkTheme : ThemeInterface = {
+    name: 'dark',
+    pallet: {
+        title: '#F8F9FA',
+
+        text: '#F8F9FA',
+        textPlaceholder: '#C4C4C4',
+
+        background: '#161616',
+        primary: '#F8F9FA',
+    },
+    font: {
+        family: 'Inter',
+    }
+}
