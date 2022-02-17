@@ -34,7 +34,7 @@ export default function Note(props : {
 
     function handleShare(){
         const shareData = {
-            title: "Notes",
+            title: "📝 AweNotes",
             text: "Escreva suas ideias e compartilhe com o mundo. Totalmente grátis, fácil e sem limites.",
             url: router.asPath,
         }
