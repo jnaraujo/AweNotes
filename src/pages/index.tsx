@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <>
     <DefaultSeo
-      title="Notes - Escreva suas ideias e compartilhe com o mundo."
+      title="📝 AweNotes - Escreva suas ideias e compartilhe com o mundo."
       description="Escreva suas ideias e compartilhe com o mundo. Totalmente grátis, fácil e sem limites."
       additionalLinkTags={
         [
