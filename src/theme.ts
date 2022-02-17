@@ -9,6 +9,9 @@ interface ThemeInterface{
         background: string;
 
         primary: string;
+
+        red: string;
+        red2: string;
     }
     font: {
         family: string;
@@ -26,6 +29,9 @@ export const lightTheme : ThemeInterface = {
 
         background: '#F8F9FA',
         primary: '#161616',
+
+        red: "#ef233c",
+        red2: "#d90429"
     },
     font: {
         family: 'Inter',
@@ -42,6 +48,9 @@ export const darkTheme : ThemeInterface = {
 
         background: '#161616',
         primary: '#F8F9FA',
+
+        red: "#ef233c",
+        red2: "#d90429"
     },
     font: {
         family: 'Inter',
