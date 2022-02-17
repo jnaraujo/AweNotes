@@ -1,7 +1,7 @@
 import { Grid, Menu, MenuItem, Tooltip } from "@mui/material";
 
 import { useTheme } from "@context/ThemeContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { BsPencilFill } from 'react-icons/bs';
 import { IoMdShareAlt } from 'react-icons/io';
@@ -21,6 +21,16 @@ export default function Note(props : {
     const { theme } = useTheme();
     const [ isEditable, setIsEditable ] = useState(props.isEditable);
     const [isOwned, setIsOwned ] = useState(true);
+
+    const [editor, setEditor] = useState({
+        title: props.title,
+        text: props.text,
+    });
+
+    // REFS
+    const titleRef = useRef(null);
+    const textRef = useRef(null);
+
 
     const [modal, setModal] = useState({
         isOpen: false,
@@ -71,15 +81,43 @@ export default function Note(props : {
         })
     }
 
-    function handleEdit() {
-        setIsEditable(!isEditable);
+    useEffect(()=>{
+        function beforeUnloadListener(event: any) {
+            event.preventDefault();
+            return event.returnValue = "Algumas alterações ainda não foram salvas.";
+        }
+        if(window){
+            window.addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+        }
+        
+        const timeOutId = setTimeout(() => {
+            console.log("texto mudou")
+            if(window){
+                window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+            }
+        }, 2000);
+        return () => {
+            clearTimeout(timeOutId)
+            if(window){
+                window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+            }
+        };
+    }, [editor])
+
+    function handleEditorChange(e) {
+        const editorText = textRef.current?.value;
+        const editorTitle = titleRef.current?.value;
+        setEditor({
+            title: editorTitle,
+            text: editorText,
+        });
     }
 
     return (
         <div className={`note ${isEditable ? "isEditable" : null}`}>
             <Grid container justifyContent={"center"} alignItems={"center"}>
                 <Grid item xs={12}>
-                    <h1 placeholder="título da nota..." suppressContentEditableWarning={true} contentEditable={isEditable}>
+                    <h1 ref={titleRef} placeholder="título da nota..." suppressContentEditableWarning={true} contentEditable={isEditable} onKeyPress={handleEditorChange}>
                         {props.title}
                     </h1>
                     <div className="bar">
@@ -124,7 +162,7 @@ export default function Note(props : {
                         </div>
                     </div>
                     <div className="line"></div>
-                    <p className="text" placeholder="escreva suas idaias..." contentEditable={isEditable} suppressContentEditableWarning={true}>
+                    <p ref={textRef} onKeyPress={handleEditorChange} className="text" placeholder="escreva suas idaias..." contentEditable={isEditable} suppressContentEditableWarning={true}>
                         {props.text}
                     </p>
                 </Grid>
