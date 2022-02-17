@@ -1,25 +1,24 @@
 {
   "compilerOptions": {
-    "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
       "@components/*": [
-        "/src/components/*"
+        "src/components/*"
       ],
       "@styles/*": [
-        "/src/styles/*"
+        "src/styles/*"
       ],
       "@lib/*": [
-        "/src/libs/*"
+        "src/libs/*"
       ],
       "@hooks/*": [
-        "/src/hooks/*"
+        "src/hooks/*"
       ],
       "@services/*": [
-        "/src/services/*"
+        "src/services/*"
       ],
       "@context/*": [
-        "/src/context/*"
+        "src/context/*"
       ]
     },
     "target": "es5",
@@ -33,12 +32,13 @@
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "incremental": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "jsx": "preserve"
   },
   "include": [
     "next-env.d.ts",
