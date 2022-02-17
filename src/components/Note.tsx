@@ -79,7 +79,7 @@ export default function Note(props : {
         <div className={`note ${isEditable ? "isEditable" : null}`}>
             <Grid container justifyContent={"center"} alignItems={"center"}>
                 <Grid item xs={12}>
-                    <h1 placeholder="título da nota" suppressContentEditableWarning={true} contentEditable={isEditable}>
+                    <h1 placeholder="título da nota..." suppressContentEditableWarning={true} contentEditable={isEditable}>
                         {props.title}
                     </h1>
                     <div className="bar">
@@ -124,7 +124,7 @@ export default function Note(props : {
                         </div>
                     </div>
                     <div className="line"></div>
-                    <p className="text" placeholder="crie uma nota..." contentEditable={isEditable} suppressContentEditableWarning={true}>
+                    <p className="text" placeholder="escreva suas idaias..." contentEditable={isEditable} suppressContentEditableWarning={true}>
                         {props.text}
                     </p>
                 </Grid>
