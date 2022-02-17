@@ -1,7 +1,7 @@
 import { Grid, Menu, MenuItem, Tooltip } from "@mui/material";
 
 import { useTheme } from "@context/ThemeContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BsPencilFill } from 'react-icons/bs';
 import { IoMdShareAlt } from 'react-icons/io';
@@ -9,6 +9,8 @@ import { MdDelete } from 'react-icons/md';
 import { useRouter } from "next/router";
 
 import { toast, ToastContainer } from 'react-toastify';
+
+import AweModal from "./AweModal";
 
 export default function Note(props : {
     title: string,
@@ -20,12 +22,20 @@ export default function Note(props : {
     const [ isEditable, setIsEditable ] = useState(props.isEditable);
     const [isOwned, setIsOwned ] = useState(true);
 
+    const [modal, setModal] = useState({
+        isOpen: false,
+        title: "",
+        content: "",
+        mdType: "",
+        onClick: (event: any)=> {},
+    });
+
     const router = useRouter();
 
     function handleShare(){
         const shareData = {
-            title: 'MDN',
-            text: 'Aprenda desenvolvimento web no MDN!',
+            title: "Notes",
+            text: "Escreva suas ideias e compartilhe com o mundo. Totalmente grátis, fácil e sem limites.",
             url: router.asPath,
         }
         try {
@@ -42,6 +52,24 @@ export default function Note(props : {
             });
         }
     }
+    function handleDelete(){
+        setModal({
+            isOpen: true,
+            title: "Você tem certeza?",
+            content: "A ação de apagar a nota não poderá ser desfeita.",
+            mdType: "delete",
+            onClick: (event)=>{
+                console.log(event)
+                setModal({
+                    isOpen: false,
+                    title: "",
+                    content: "",
+                    mdType: "",
+                    onClick: ()=>{},
+                })
+            }
+        })
+    }
 
     function handleEdit() {
         setIsEditable(!isEditable);
@@ -51,7 +79,7 @@ export default function Note(props : {
         <div className={`note ${isEditable ? "isEditable" : null}`}>
             <Grid container justifyContent={"center"} alignItems={"center"}>
                 <Grid item xs={12}>
-                    <h1 placeholder="título da nota" contentEditable={isEditable}>
+                    <h1 placeholder="título da nota" suppressContentEditableWarning={true} contentEditable={isEditable}>
                         {props.title}
                     </h1>
                     <div className="bar">
@@ -62,13 +90,13 @@ export default function Note(props : {
                             {
                                 isOwned ? (
                                     <>
-                                        <div className="edit tool" onClick={handleEdit}>
+                                        {/* <div className="edit tool" onClick={handleEdit}>
                                             <Tooltip title="Edit" placement="top">
                                                 <div>
                                                     <BsPencilFill size={20} />
                                                 </div>
                                             </Tooltip>
-                                        </div>
+                                        </div> */}
                                         <div className="tool share">
                                             <Tooltip title="Share" placement="top">
                                                 <div onClick={handleShare}>
@@ -78,8 +106,8 @@ export default function Note(props : {
                                         </div>
                                         <div className="tool delete">
                                             <Tooltip title="Delete" placement="top">
-                                                <div>
-                                                    <MdDelete size={25} />
+                                                <div onClick={handleDelete}>
+                                                    <MdDelete size={25 } />
                                                 </div>
                                             </Tooltip>
                                         </div>
@@ -95,12 +123,13 @@ export default function Note(props : {
                             
                         </div>
                     </div>
-                    <div className="line" contentEditable={isEditable}></div>
-                    <p className="text" placeholder="crie uma nota..." contentEditable={isEditable}>
+                    <div className="line"></div>
+                    <p className="text" placeholder="crie uma nota..." contentEditable={isEditable} suppressContentEditableWarning={true}>
                         {props.text}
                     </p>
                 </Grid>
             </Grid>
+            <AweModal modalInfo={modal} />
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
