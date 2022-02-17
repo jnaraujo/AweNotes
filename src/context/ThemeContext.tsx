@@ -17,12 +17,12 @@ export default function ThemeProvider({children}) {
     useEffect(() => {
         const themeStorage = localStorage.getItem("theme");
 
-        if( themeStorage == "light"){
-            setTheme(lightTheme);
-        }else{
-            (import('./../theme').then(({darkTheme})=>{
-                setTheme(darkTheme);
-            }));
+        if( themeStorage){
+            if(themeStorage === "dark"){
+                (import('./../theme').then(({darkTheme})=>{
+                    setTheme(darkTheme);
+                }));
+            }
         }
     }, []);
 
