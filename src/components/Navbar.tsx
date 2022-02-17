@@ -25,7 +25,7 @@ export default function Navbar() {
                 <Grid item xs={7} lg={5}>
                     <h1>
                         <Link href="/" passHref>
-                            <a>notes</a>
+                            <a>📝 AweNotes</a>
                         </Link>
                     </h1>
                 </Grid>
