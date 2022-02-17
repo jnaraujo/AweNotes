@@ -4,6 +4,7 @@
 
 Um site de notas simples, minimalista e fácil onde você pode criar, modificar e compartilhar notas com qualquer pessoas, a qualquer hora 🤞
 Feito totalmente em React, NextJS e TypeScript 🥳
+
 ![git da interface do AweNotes](/public//gif_interface.webp)
 
 ## 💻 Tech Stack
@@ -12,7 +13,7 @@ Feito totalmente em React, NextJS e TypeScript 🥳
  2. NextJS
  3. TypeScript
 
-## Rodando localmente
+## 🚀 Rodando localmente
 1) Clone o projeto
 ```sh
 git clone https://github.com/jnaraujo/AweNotes.git
@@ -30,9 +31,11 @@ yarn install
 yarn dev
 ```
 
+## 💄 Interface do projeto
+
 <div align="center" >
-  <img src="/public/gif_interface2.webp">
-  <img src="/public/interface3.png">
+  <img src="/public/gif_interface2.webp" width="100">
+  <img src="/public/interface3.png" width="100">
 </div>
 
 ## 📚 TODO
