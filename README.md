@@ -34,8 +34,8 @@ yarn dev
 ## 💄 Interface do projeto
 
 <div align="center" >
-  <img src="/public/gif_interface2.webp" width="100">
-  <img src="/public/interface3.png" width="100">
+  <img src="/public/gif_interface2.webp" height="300" width="auto">
+  <img src="/public/interface3.png" height="300" width="auto">
 </div>
 
 ## 📚 TODO
