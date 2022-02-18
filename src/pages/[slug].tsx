@@ -37,6 +37,7 @@ export default function Home() {
     isSaved: true,
     isEditable: false
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleEditorUpdate(editor){
     if(slug != "new") return;
@@ -51,7 +52,6 @@ export default function Home() {
           email: user.email
         }
       }
-      console.log(noteData);
     }
   }
 
@@ -137,10 +137,12 @@ export default function Home() {
 
   useEffect(()=>{
     if(slug != "new"){
+      setIsLoading(true);
       getNote(String(slug)).then(note => {
         if(!note){
           return;
         }
+        setIsLoading(false);
         setNote({
           title: note.title,
           text: note.text,
@@ -181,7 +183,14 @@ export default function Home() {
             <Note title={note.title} text={note.text} author={{
                 name: note.author.name,
                 email: note.author.email
-              }} isEditable={note.isEditable} onEditorUpdate={handleEditorUpdate} onDelete={handleOnDelete} isSaved={note.isSaved} onSave={handleSave}></Note>
+              }}
+              isEditable={note.isEditable}
+              onEditorUpdate={handleEditorUpdate}
+              onDelete={handleOnDelete}
+              isSaved={note.isSaved}
+              onSave={handleSave}
+              isLoading={isLoading}
+              ></Note>
           </div>
         </Grid>
       </Grid>
