@@ -4,10 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { DefaultSeo } from 'next-seo';
 import { Grid } from '@mui/material';
-import { v4 } from 'uuid';
 
 
 import 'react-responsive-modal/styles.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 // COMPONENTS
 import Navbar from '@components/Navbar';
@@ -19,7 +19,7 @@ import { useAuth } from '@context/AuthContext';
 import { useRouter } from 'next/router';
 
 // SERVICES
-import { getNote, createNote } from '@services/NoteService';
+import { getNote, createNote, deleteNote, updateNote } from '@services/NoteService';
 
 export default function Home() {
   const router = useRouter();
@@ -71,16 +71,60 @@ export default function Home() {
         }
         const noteId = await createNote(noteData);
         router.push(`/${noteId}`);
+      }else{
+        const noteData = {
+          title: editor.title,
+          text: editor.text,
+        }
+        try{
+          updateNote(String(slug), noteData);
+          toast.success('Nota salva com sucesso!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+          });
+        }catch(err){
+          toast.error('Erro ao atualizar nota', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+          });
+        }
       }
     }
   }
 
-  useEffect(()=>{
+  async function handleOnDelete(){
+    try{
+      const deleteNoteResult = await deleteNote(String(slug));
+      router.push('/');
+    }catch(error){
+      toast.error('Erro ao tentar apagar a nota', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
+    }
+  }
+
+  useEffect(()=>{ 
     if(slug == "new"){
       setNote({
         title: "",
         text: "",
-        isSaved: true,
+        isSaved: false,
         author: {
           name: user.name ? user.name : "",
           email: user.email ? user.email : ""
@@ -110,7 +154,7 @@ export default function Home() {
         })
       });
     }
-  }, [slug])
+  }, [slug, user.email])
 
   return (
     <>
@@ -138,10 +182,21 @@ export default function Home() {
             <Note title={note.title} text={note.text} author={{
                 name: note.author.name,
                 email: note.author.email
-              }} isEditable={note.isEditable} onEditorUpdate={handleEditorUpdate} isSaved={note.isSaved} onSave={handleSave}></Note>
+              }} isEditable={note.isEditable} onEditorUpdate={handleEditorUpdate} onDelete={handleOnDelete} isSaved={note.isSaved} onSave={handleSave}></Note>
           </div>
         </Grid>
       </Grid>
+      <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+      />
     </div>
     </>
   )

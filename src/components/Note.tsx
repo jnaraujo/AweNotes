@@ -22,6 +22,7 @@ export default function Note(props : {
     },
     isSaved: boolean,
     isEditable: boolean | false,
+    onDelete?: () => void,
     onEditorUpdate?: (editor: {
         title: string,
         text: string
@@ -32,7 +33,7 @@ export default function Note(props : {
     })=> void
 }) {
     const { theme } = useTheme();
-    const [isOwned, setIsOwned ] = useState(true);
+    const [isOwned, setIsOwned ] = useState(false);
 
     const [isSaved, setIsSaved] = useState(props.isSaved);
 
@@ -85,6 +86,11 @@ export default function Note(props : {
             mdType: "delete",
             onClick: (event)=>{
                 console.log(event)
+                if(event.type == "delete"){
+                    if(props.onDelete){
+                        props.onDelete();
+                    }
+                }
                 setModal({
                     isOpen: false,
                     title: "",
@@ -103,7 +109,7 @@ export default function Note(props : {
                 text: textRef.current.innerText,
             });
         }
-        setIsSaved(true);
+        // setIsSaved(true);
     }
 
     useEffect(()=>{
@@ -143,19 +149,19 @@ export default function Note(props : {
 
     useEffect(()=>{
         if(user){
-            if(props.author.email != ""){
-                if(user.email == props.author.email){
-                    setIsOwned(true);
-                }else{
-                    setIsOwned(false);
-                }
-            }else{
+            if(user.email == props.author.email){
                 setIsOwned(true);
+            }else{
+                setIsOwned(false);
             }
         }else{
             setIsOwned(false);
         }
     },[props.author.email, user])
+
+    useEffect(()=>{
+        setIsSaved(props.isSaved);
+    }, [props.isSaved])
 
     function handleEditorChange(e) {
         const editorText = textRef.current?.value;
@@ -188,13 +194,20 @@ export default function Note(props : {
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <div className="tool share">
-                                            <Tooltip title="Share" placement="top">
-                                                <div onClick={handleShare}>
-                                                    <IoMdShareAlt size={30} />
+
+                                        {
+                                            isSaved == true ? (
+                                                <div className="tool share">
+                                                    <Tooltip title="Share" placement="top">
+                                                        <div onClick={handleShare}>
+                                                            <IoMdShareAlt size={30} />
+                                                        </div>
+                                                    </Tooltip>
                                                 </div>
-                                            </Tooltip>
-                                        </div>
+                                            ) :
+                                            null
+                                        }
+                                        
                                         <div className="tool delete">
                                             <Tooltip title="Delete" placement="top">
                                                 <div onClick={handleDelete}>
