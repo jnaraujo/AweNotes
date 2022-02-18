@@ -1,6 +1,7 @@
 import { Grid, Menu, MenuItem } from "@mui/material";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useTheme } from "src/context/ThemeContext";
 
 import { BsLightbulbFill, BsLightbulb } from "react-icons/bs";
@@ -56,15 +57,13 @@ export default function Navbar() {
                 <Grid item xs={2} className="right" >
                     {
                         user.id ? (
-                            <div className="login" style={{ cursor: "pointer" }} onClick={(event)=>{
+                            <div className="login" style={{ cursor: "pointer", borderRadius: "50px", overflow: 'hidden' }} onClick={(event)=>{
                                     if(event.currentTarget){
                                         setAnchorEl(event.currentTarget);
                                         setOpenProfileMenu(true);
                                     }
                                 }}>
-                                <img style={{
-                                    borderRadius: "50px"
-                                }} alt='User profile pic' src={user.avatar} width={40} height={40}></img>
+                                <Image alt='User profile pic' src={user.avatar} width={40} height={40}></Image>
                             </div>
                         ) : (
                             <div className="login" style={{

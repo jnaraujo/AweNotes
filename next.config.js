@@ -4,5 +4,8 @@ module.exports = {
   generateBuildId: () => 'build',
   experimental: {
     styledComponents: true,
-  }
+  },
+  images: {
+    domains: ['lh3.googleusercontent.com'],
+  },
 }
