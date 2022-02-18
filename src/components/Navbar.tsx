@@ -1,11 +1,28 @@
-import { Grid } from "@mui/material";
+import { Grid, Menu, MenuItem } from "@mui/material";
+
 import Link from "next/link";
 import { useTheme } from "src/context/ThemeContext";
 
 import { BsLightbulbFill, BsLightbulb } from "react-icons/bs";
+import { IoMdPerson } from "react-icons/io"
+import { useState } from "react";
+
+import { useAuth } from '@context/AuthContext';
 
 export default function Navbar() {
     const { theme, setTheme } = useTheme();
+    
+    const { user, login, logout } = useAuth();
+
+    const [openLoginMenu, setOpenLoginMenu ] = useState(false);
+    const [openProfileMenu, setOpenProfileMenu ] = useState(false);
+    
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    function handleClose(){
+        setOpenLoginMenu(false);
+        setOpenProfileMenu(false);
+        setAnchorEl(null);
+    }
 
     async function changeTheme() {
         if (theme.name === "light") {
@@ -20,7 +37,14 @@ export default function Navbar() {
     return (
         <div className="navbar">
             <Grid container justifyContent={"center"} alignItems={"center"}>
-                <Grid item xs={2}>
+                <Grid item xs={2} className="left">
+                    <div className="themeChange" onClick={changeTheme}>
+                        {
+                            theme.name === "light" ?
+                            <BsLightbulb size={25} /> :
+                            <BsLightbulbFill size={25} />
+                        }
+                    </div>
                 </Grid>
                 <Grid item xs={7} lg={5}>
                     <h1>
@@ -30,13 +54,47 @@ export default function Navbar() {
                     </h1>
                 </Grid>
                 <Grid item xs={2} className="right" >
-                    <div className="themeChange" onClick={changeTheme}>
-                        {
-                            theme.name === "light" ?
-                            <BsLightbulb size={25} /> :
-                            <BsLightbulbFill size={25} />
-                        }
-                    </div>
+                    {
+                        user.id ? (
+                            <div className="login" style={{ cursor: "pointer" }} onClick={(event)=>{
+                                    if(event.currentTarget){
+                                        setAnchorEl(event.currentTarget);
+                                        setOpenProfileMenu(true);
+                                    }
+                                }}>
+                                <img style={{
+                                    borderRadius: "50px"
+                                }} alt='User profile pic' src={user.avatar} width={40} height={40}></img>
+                            </div>
+                        ) : (
+                            <div className="login" style={{
+                                cursor: "pointer"
+                            }} onClick={(event)=>{
+                                    if(event.currentTarget){
+                                        setAnchorEl(event.currentTarget);
+                                        setOpenLoginMenu(true);
+                                    }
+                                }}>
+                                <IoMdPerson size={25} />
+                            </div>
+                        )
+                    }
+                    <Menu open={openProfileMenu} anchorEl={anchorEl} onClose={handleClose} >
+                        <MenuItem onClick={()=>{
+                            handleClose();
+                            logout();
+                        }}>  
+                            Log out
+                        </MenuItem>
+                    </Menu>
+                    <Menu open={openLoginMenu} anchorEl={anchorEl} onClose={handleClose} >
+                        <MenuItem onClick={()=>{
+                            handleClose();
+                            login();
+                        }}>  
+                            Log in
+                        </MenuItem>
+                    </Menu>
                 </Grid>
             </Grid>
             <style jsx>{`
@@ -65,21 +123,35 @@ export default function Navbar() {
 
                         cursor: pointer;
                         transition: transform linear .2s;
-
-                        animation: lampflicker 2s infinite;
                         
                         &:hover{
                             transform: scale(1.1);
-                            
                         }
+                    }
+                    .login{
+                        display: flex;
+                        justify-content: right;
+                        align-items: center;
+
+                        width: fit-content;
+                        cursor: pointer;
                     }
                 }
                 `}</style>
             <style jsx global>{`
                 .navbar{
+                    .left{
+                        display: flex;
+                        justify-content: flex-start;
+                    }
                     .right{
                         display: flex;
                         justify-content: flex-end;
+                    }
+                    .login{
+                        svg{
+                            fill: ${theme.pallet.primary};
+                        }
                     }
                     .themeChange{
                         svg{
