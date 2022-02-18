@@ -31,7 +31,6 @@ export default function Note(props : {
     const titleRef = useRef(null);
     const textRef = useRef(null);
 
-
     const [modal, setModal] = useState({
         isOpen: false,
         title: "",
@@ -91,16 +90,10 @@ export default function Note(props : {
         }
         
         const timeOutId = setTimeout(() => {
-            console.log("texto mudou");
-            // toast.info('Conteúdo salvo.', {
-            //     position: "top-right",
-            //     autoClose: 5000,
-            //     hideProgressBar: true,
-            //     closeOnClick: false,
-            //     pauseOnHover: false,
-            //     draggable: true,
-            //     progress: undefined,
-            // });
+            if((editor.text || editor.title) != ""){
+                console.log("texto mudou");
+            }
+            
             if(window){
                 window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
             }
@@ -131,7 +124,7 @@ export default function Note(props : {
                     </h1>
                     <div className="bar">
                         <div className="author">
-                            by: <span>{props.author || "you"}</span>
+                            by: <span>{props.author ? props.author.split(" ")[0] : "you"}</span>
                         </div>
                         <div className="tools">
                             {
