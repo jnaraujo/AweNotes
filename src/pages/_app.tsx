@@ -7,6 +7,7 @@ import { LinearProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import ThemeProvider from 'src/context/ThemeContext';
+import { AuthProvider } from 'src/context/AuthContext';
 
 // eslint-disable-next-line react/prop-types
 function MyApp({ Component, pageProps }) {
@@ -42,9 +43,11 @@ function MyApp({ Component, pageProps }) {
         width: '100%',
         zIndex: 999
       }} /> : ''}
-      <ThemeProvider>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </AuthProvider>
     </>
   )
 }
