@@ -10,11 +10,14 @@ import { BiNote } from "react-icons/bi";
 import { useState } from "react";
 
 import { useAuth } from '@context/AuthContext';
+import { useRouter } from "next/router";
 
 export default function Navbar() {
     const { theme, setTheme } = useTheme();
     
     const { user, login, logout } = useAuth();
+
+    const router = useRouter();
 
     const [openLoginMenu, setOpenLoginMenu ] = useState(false);
     const [openProfileMenu, setOpenProfileMenu ] = useState(false);
@@ -64,7 +67,9 @@ export default function Navbar() {
                                 justifyContent: "center",
                             }}>
                                 <Tooltip title="Criar nota" placement="bottom">
-                                    <div className="criarNota">
+                                    <div className="criarNota" onClick={()=>{
+                                        router.push("/new")
+                                    }}>
                                         <BiNote size={25} />
                                     </div>
                                 </Tooltip>
