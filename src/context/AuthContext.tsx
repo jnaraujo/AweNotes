@@ -18,7 +18,7 @@ type UserType = {
 type AuthState = {
     user: UserType | null;
     login(): Promise<void>
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthState>({} as AuthState);
@@ -51,12 +51,17 @@ export function AuthProvider({ children }) {
           throw new Error('Usuário não autenticado.');
         }
     };
+
+    const logout = async (): Promise<void> =>{
+        await auth.signOut()
+        setUser({} as UserType)
+    }
     
     return (
         <AuthContext.Provider value={{
             user,
             login,
-            logout: () => {}
+            logout
         }}>
             {children}
         </AuthContext.Provider>
