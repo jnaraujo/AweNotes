@@ -7,8 +7,6 @@ import { Grid } from '@mui/material';
 
 
 import 'react-responsive-modal/styles.css';
-import { Modal } from 'react-responsive-modal';
-import axios from 'axios';
 
 // COMPONENTS
 import Navbar from '@components/Navbar';
