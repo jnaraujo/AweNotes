@@ -36,10 +36,15 @@ export default function Home() {
     const { query: { slug } } = router;
 
     if(slug == "new"){
-
+      setNote({
+        title: "",
+        text: "",
+        author: user.name ? user.name : "",
+        isEditable: true
+      })
     }
     console.log(slug)
-  }, [router])
+  }, [router, user])
 
   
 
