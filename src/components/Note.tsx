@@ -3,7 +3,7 @@ import { Grid, Menu, MenuItem, Tooltip } from "@mui/material";
 import { useTheme } from "@context/ThemeContext";
 import { useEffect, useRef, useState } from "react";
 
-import { BsPencilFill } from 'react-icons/bs';
+import { GoPlus } from 'react-icons/go';
 import { IoMdShareAlt } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
 import { useRouter } from "next/router";
@@ -130,13 +130,13 @@ export default function Note(props : {
                             {
                                 isOwned ? (
                                     <>
-                                        {/* <div className="edit tool" onClick={handleEdit}>
-                                            <Tooltip title="Edit" placement="top">
+                                        <div className="save tool">
+                                            <Tooltip title="Save" placement="top">
                                                 <div>
-                                                    <BsPencilFill size={20} />
+                                                    <GoPlus size={25} />
                                                 </div>
                                             </Tooltip>
-                                        </div> */}
+                                        </div>
                                         <div className="tool share">
                                             <Tooltip title="Share" placement="top">
                                                 <div onClick={handleShare}>
