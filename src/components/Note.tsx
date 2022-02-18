@@ -11,15 +11,32 @@ import { useRouter } from "next/router";
 import { toast, ToastContainer } from 'react-toastify';
 
 import AweModal from "./AweModal";
+import { useAuth } from "@context/AuthContext";
 
 export default function Note(props : {
     title: string,
     text: string,
-    author: string,
-    isEditable: boolean,
+    author: {
+        name: string,
+        email: string
+    },
+    isSaved: boolean,
+    isEditable: boolean | false,
+    onEditorUpdate?: (editor: {
+        title: string,
+        text: string
+    })=> void,
+    onSave?: (editor: {
+        title: string,
+        text: string
+    })=> void
 }) {
     const { theme } = useTheme();
     const [isOwned, setIsOwned ] = useState(true);
+
+    const [isSaved, setIsSaved] = useState(props.isSaved);
+
+    const { user } = useAuth();
 
     const [editor, setEditor] = useState({
         title: props.title,
@@ -79,31 +96,66 @@ export default function Note(props : {
         })
     }
 
+    function handleSave(){
+        if(props.onSave){
+            props.onSave({
+                title: titleRef.current.innerText,
+                text: textRef.current.innerText,
+            });
+        }
+        setIsSaved(true);
+    }
+
     useEffect(()=>{
         function beforeUnloadListener(event: any) {
             event.preventDefault();
             return event.returnValue = "Algumas alterações ainda não foram salvas.";
         }
-        if(window){
-            window.addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+        const editorData = {
+            title: titleRef.current.innerText,
+            text: textRef.current.innerText
         }
-        
+
+        // if(window){
+        //     window.addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+        // };
+
         const timeOutId = setTimeout(() => {
-            if((editor.text || editor.title) != ""){
-                console.log("texto mudou");
+
+            // if(window){
+            //     window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+            // }
+
+            const editorData = {
+                title: titleRef.current.innerText,
+                text: textRef.current.innerText
             }
-            
-            if(window){
-                window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
-            }
+
+            setEditor(editorData);
         }, 2000);
         return () => {
             clearTimeout(timeOutId)
             if(window){
-                window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+                // window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
             }
         };
-    }, [editor])
+    }, [titleRef, textRef, isSaved]);
+
+    useEffect(()=>{
+        if(user){
+            if(props.author.email != ""){
+                if(user.email == props.author.email){
+                    setIsOwned(true);
+                }else{
+                    setIsOwned(false);
+                }
+            }else{
+                setIsOwned(true);
+            }
+        }else{
+            setIsOwned(false);
+        }
+    },[props.author.email, user])
 
     function handleEditorChange(e) {
         const editorText = textRef.current?.value;
@@ -123,7 +175,7 @@ export default function Note(props : {
                     </h1>
                     <div className="bar">
                         <div className="author">
-                            by: <span>{props.author ? props.author.split(" ")[0] : "you"}</span>
+                            by: <span>{props.author?.name ? props.author.name.split(" ")[0] : "you"}</span>
                         </div>
                         <div className="tools">
                             {
@@ -131,7 +183,7 @@ export default function Note(props : {
                                     <>
                                         <div className="save tool">
                                             <Tooltip title="Save" placement="top">
-                                                <div>
+                                                <div onClick={handleSave}>
                                                     <GoPlus size={25} />
                                                 </div>
                                             </Tooltip>
