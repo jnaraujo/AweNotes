@@ -17,7 +17,7 @@ export default function ThemeProvider({children}) {
     useEffect(() => {
         const themeStorage = localStorage.getItem("theme");
 
-        if( themeStorage){
+        if( themeStorage ){
             if(themeStorage === "dark"){
                 (import('./../theme').then(({darkTheme})=>{
                     setTheme(darkTheme);
