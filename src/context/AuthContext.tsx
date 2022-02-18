@@ -1,9 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import {
     GoogleAuthProvider,
     onAuthStateChanged,
     signInWithPopup,
+    browserLocalPersistence,
     User as FirebaseUser,
   } from 'firebase/auth';
 
@@ -41,12 +42,24 @@ export function AuthProvider({ children }) {
         });
     };
 
+    useEffect(()=>{
+        const unsubscribe = onAuthStateChanged(auth, firebaseUser => {
+            if (firebaseUser) {
+              handleUser(firebaseUser);
+            }
+          });
+      
+          return () => unsubscribe();
+    }, [])
+
     const login = async (): Promise<void> => {
         if (user.id) return;
         const provider = new GoogleAuthProvider();
         try {
-          const result = await signInWithPopup(auth, provider);
-          handleUser(result.user);
+            auth.setPersistence(browserLocalPersistence).then(async ()=>{
+                const result = await signInWithPopup(auth, provider);
+                handleUser(result.user);
+            })
         } catch (error) {
           throw new Error('Usuário não autenticado.');
         }
