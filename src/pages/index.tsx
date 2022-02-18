@@ -16,9 +16,19 @@ import Note from '@components/Note';
 
 // CONTEXTS
 import { useTheme } from '@context/ThemeContext';
+import { useAuth } from '@context/AuthContext';
 
 export default function Home() {
   const {theme} = useTheme();
+  const { login, user } = useAuth();
+
+  useEffect(() => {
+    if(!user.id){
+      login();
+    }else{
+      console.log(1, user);
+    }
+  }, [user]);
 
   const [note, setNote] = useState({
       title: '',
