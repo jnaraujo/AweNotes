@@ -21,6 +21,7 @@ export default function Note(props : {
         email: string
     },
     isSaved: boolean,
+    isLoading?: boolean | false,
     isEditable: boolean | false,
     onDelete?: () => void,
     onEditorUpdate?: (editor: {
@@ -173,7 +174,7 @@ export default function Note(props : {
     }
 
     return (
-        <div className={`note ${props.isEditable ? "isEditable" : null}`}>
+        <div className={`note ${props.isEditable ? "isEditable" : null} ${props.isLoading ? "loading" : null}`}>
             <Grid container justifyContent={"center"} alignItems={"center"}>
                 <Grid item xs={12}>
                     <h1 ref={titleRef} placeholder="título da nota..." suppressContentEditableWarning={true} contentEditable={props.isEditable} onKeyPress={handleEditorChange}>
@@ -260,6 +261,33 @@ export default function Note(props : {
             `}</style>
             <style jsx>{`
                 .note{
+                    &.loading{
+                        h1, .text{
+                            &[placeholder]:empty:before{
+                                font-style: italic;
+                                color: transparent !important;
+                            }
+                            animation: FadeIn 0.75s ease-in-out infinite alternate;
+                        }
+                        .author{
+                            color: transparent !important;
+
+                            animation: FadeIn 0.75s ease-in-out infinite alternate;
+                        }
+                        .text{
+                            min-height: 600px;
+                        }
+
+                        @keyframes FadeIn {
+                            from {
+                            background-color: rgb(182, 182, 182);
+                            }
+                            
+                            to {
+                            background-color: rgb(204, 202, 202);
+                        }
+                        }
+                    }
                     &.isEditable{
                         h1, .text{
                             cursor: text;
