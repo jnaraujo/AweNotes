@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { DefaultSeo } from 'next-seo';
 import { Grid } from '@mui/material';
 
-
 import 'react-responsive-modal/styles.css';
 import { toast, ToastContainer } from 'react-toastify';
 
