@@ -19,7 +19,6 @@ export default function Note(props : {
     isEditable: boolean,
 }) {
     const { theme } = useTheme();
-    const [ isEditable, setIsEditable ] = useState(props.isEditable);
     const [isOwned, setIsOwned ] = useState(true);
 
     const [editor, setEditor] = useState({
@@ -116,10 +115,10 @@ export default function Note(props : {
     }
 
     return (
-        <div className={`note ${isEditable ? "isEditable" : null}`}>
+        <div className={`note ${props.isEditable ? "isEditable" : null}`}>
             <Grid container justifyContent={"center"} alignItems={"center"}>
                 <Grid item xs={12}>
-                    <h1 ref={titleRef} placeholder="título da nota..." suppressContentEditableWarning={true} contentEditable={isEditable} onKeyPress={handleEditorChange}>
+                    <h1 ref={titleRef} placeholder="título da nota..." suppressContentEditableWarning={true} contentEditable={props.isEditable} onKeyPress={handleEditorChange}>
                         {props.title}
                     </h1>
                     <div className="bar">
@@ -164,7 +163,7 @@ export default function Note(props : {
                         </div>
                     </div>
                     <div className="line"></div>
-                    <p ref={textRef} onKeyPress={handleEditorChange} className="text" placeholder="escreva suas idaias..." contentEditable={isEditable} suppressContentEditableWarning={true}>
+                    <p ref={textRef} onKeyPress={handleEditorChange} className="text" placeholder="escreva suas idaias..." contentEditable={props.isEditable} suppressContentEditableWarning={true}>
                         {props.text}
                     </p>
                 </Grid>
