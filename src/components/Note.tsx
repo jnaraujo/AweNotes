@@ -91,7 +91,16 @@ export default function Note(props : {
         }
         
         const timeOutId = setTimeout(() => {
-            console.log("texto mudou")
+            console.log("texto mudou");
+            // toast.info('Conteúdo salvo.', {
+            //     position: "top-right",
+            //     autoClose: 5000,
+            //     hideProgressBar: true,
+            //     closeOnClick: false,
+            //     pauseOnHover: false,
+            //     draggable: true,
+            //     progress: undefined,
+            // });
             if(window){
                 window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
             }
