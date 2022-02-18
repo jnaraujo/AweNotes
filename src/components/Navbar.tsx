@@ -1,4 +1,4 @@
-import { Grid, Menu, MenuItem } from "@mui/material";
+import { Grid, Menu, MenuItem, Tooltip } from "@mui/material";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import { useTheme } from "src/context/ThemeContext";
 
 import { BsLightbulbFill, BsLightbulb } from "react-icons/bs";
 import { IoMdPerson } from "react-icons/io"
+import { BiNote } from "react-icons/bi";
 import { useState } from "react";
 
 import { useAuth } from '@context/AuthContext';
@@ -38,7 +39,7 @@ export default function Navbar() {
     return (
         <div className="navbar">
             <Grid container justifyContent={"center"} alignItems={"center"}>
-                <Grid item xs={2} className="left">
+                <Grid item xs={3} className="left">
                     <div className="themeChange" onClick={changeTheme}>
                         {
                             theme.name === "light" ?
@@ -47,23 +48,34 @@ export default function Navbar() {
                         }
                     </div>
                 </Grid>
-                <Grid item xs={7} lg={5}>
+                <Grid item xs={5} lg={5}>
                     <h1>
                         <Link href="/" passHref>
                             <a>📝 AweNotes</a>
                         </Link>
                     </h1>
                 </Grid>
-                <Grid item xs={2} className="right" >
+                <Grid item xs={3} className="right" >
                     {
                         user.id ? (
-                            <div className="login" style={{ cursor: "pointer", borderRadius: "50px", overflow: 'hidden' }} onClick={(event)=>{
-                                    if(event.currentTarget){
-                                        setAnchorEl(event.currentTarget);
-                                        setOpenProfileMenu(true);
-                                    }
-                                }}>
-                                <Image alt='User profile pic' src={user.avatar} width={40} height={40}></Image>
+                            <div style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}>
+                                <Tooltip title="Criar nota" placement="bottom">
+                                    <div className="criarNota">
+                                        <BiNote size={25} />
+                                    </div>
+                                </Tooltip>
+                                <div className="login" style={{ cursor: "pointer", borderRadius: "50px", overflow: 'hidden' }} onClick={(event)=>{
+                                        if(event.currentTarget){
+                                            setAnchorEl(event.currentTarget);
+                                            setOpenProfileMenu(true);
+                                        }
+                                    }}>
+                                    <Image alt='User profile pic' src={user.avatar} width={40} height={40}></Image>
+                                </div>
                             </div>
                         ) : (
                             <div className="login" style={{
@@ -114,6 +126,28 @@ export default function Navbar() {
                     h1{
                         color: ${theme.pallet.primary};
                         font-size: 20px;
+                    }
+                    .criarNota{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        
+                        font-family: Inter;
+                        background-color: ${theme.pallet.primary};
+                        color: ${theme.pallet.background};
+                        font-weight: 500;
+                        font-size: 16px;
+
+                        border-radius: 10px;
+                        padding: 6px;
+
+                        cursor: pointer;
+
+                        margin-right: 10px;
+
+                        @media (min-width: 900px) {
+                            margin-right: 20px;
+                        }
                     }
                     .themeChange{
                         display: flex;
