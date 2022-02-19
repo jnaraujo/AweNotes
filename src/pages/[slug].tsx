@@ -120,6 +120,7 @@ export default function Home() {
 
   useEffect(()=>{ 
     if(slug == "new"){
+      setIsLoading(false);
       setNote({
         title: "",
         text: "",
