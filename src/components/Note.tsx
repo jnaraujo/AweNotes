@@ -18,7 +18,7 @@ export default function Note(props : {
     text: string,
     author: {
         name: string,
-        email: string
+        id: string
     },
     isSaved: boolean,
     isLoading?: boolean | false,
@@ -150,7 +150,7 @@ export default function Note(props : {
 
     useEffect(()=>{
         if(user){
-            if(user.email == props.author.email){
+            if(user.id == props.author.id){
                 setIsOwned(true);
             }else{
                 setIsOwned(false);
@@ -158,7 +158,7 @@ export default function Note(props : {
         }else{
             setIsOwned(false);
         }
-    },[props.author.email, user])
+    },[props.author.id, user])
 
     useEffect(()=>{
         setIsSaved(props.isSaved);
