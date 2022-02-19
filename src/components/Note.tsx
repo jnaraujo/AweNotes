@@ -107,7 +107,7 @@ export default function Note(props : {
         if(props.onSave){
             props.onSave({
                 title: titleRef.current.innerText,
-                text: textRef.current.innerText,
+                text: textRef.current.innerHTML,
             });
         }
         // setIsSaved(true);
@@ -120,7 +120,7 @@ export default function Note(props : {
         }
         const editorData = {
             title: titleRef.current.innerText,
-            text: textRef.current.innerText
+            text: textRef.current.innerHTML
         }
 
         // if(window){
@@ -135,7 +135,7 @@ export default function Note(props : {
 
             const editorData = {
                 title: titleRef.current.innerText,
-                text: textRef.current.innerText
+                text: textRef.current.innerHTML
             }
 
             setEditor(editorData);
