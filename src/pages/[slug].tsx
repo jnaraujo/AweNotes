@@ -20,6 +20,9 @@ import { useRouter } from 'next/router';
 // SERVICES
 import { getNote, createNote, deleteNote, updateNote } from '@services/NoteService';
 
+// TYPES
+// import { UserType } from "@types/UserTypes";
+
 export default function Home() {
   const router = useRouter();
   const { query: { slug } } = router;
@@ -32,7 +35,7 @@ export default function Home() {
     text: '',
     author: {
       name: '',
-      email: ''
+      id: ''
     },
     isSaved: true,
     isEditable: false
@@ -49,7 +52,7 @@ export default function Home() {
         createdAt: new Date(),
         author: {
           name: user.name,
-          email: user.email
+          id: user.id
         }
       }
     }
@@ -65,7 +68,7 @@ export default function Home() {
           createdAt: new Date(),
           author: {
             name: user.name,
-            email: user.email
+            id: user.id
           }
         }
         const noteId = await createNote(noteData);
@@ -127,7 +130,7 @@ export default function Home() {
         isSaved: false,
         author: {
           name: user.name ? user.name : "",
-          email: user.email ? user.email : ""
+          id: user.id ? user.id : ""
         },
         isEditable: true
       })
@@ -150,9 +153,9 @@ export default function Home() {
           isSaved: true,
           author: {
             name: note.author.name,
-            email: note.author.email
+            id: note.author.id
           },
-          isEditable: note.author.email == user.email ? true : false
+          isEditable: note.author.id == user.id ? true : false
         })
       });
     }
