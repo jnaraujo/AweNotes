@@ -19,7 +19,10 @@
       ],
       "@context/*": [
         "src/context/*"
-      ]
+      ],
+      "@types/*": [
+        "src/@types/*"
+      ],
     },
     "target": "es5",
     "lib": [
