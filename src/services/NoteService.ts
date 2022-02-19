@@ -7,7 +7,7 @@ type Note = {
   createdAt: Date
   author: {
     name: string
-    email: string
+    id: string
   }
 }
 
