@@ -11,7 +11,7 @@ import {
 import { auth } from "@services/firebase";
 
 // @TYPES
-import { UserType } from "@types/UserTypes";
+import { UserType } from "src/@types/UserTypes";
 
 type AuthState = {
     user: UserType | null;
