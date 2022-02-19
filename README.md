@@ -51,6 +51,7 @@ yarn dev
  - [x] Modo escuro
  - [x] Interface de notas
  - [x] Editar notas
- - [ ] Salvar notas na nuvem
- - [ ] Login e registro
+ - [x] Salvar notas na nuvem
+ - [x] Login e registro
+ - [ ] Listar as minhas notas
  - [ ] Comentarios
