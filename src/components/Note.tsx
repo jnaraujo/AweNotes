@@ -13,6 +13,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import AweModal from "./AweModal";
 import { useAuth } from "@context/AuthContext";
 
+// UTILS
+import Sanitize from "src/utils/Sanitize";
+
+
 export default function Note(props : {
     title: string,
     text: string,
@@ -229,8 +233,9 @@ export default function Note(props : {
                         </div>
                     </div>
                     <div className="line"></div>
-                    <p ref={textRef} onKeyPress={handleEditorChange} className="text" placeholder="escreva suas idaias..." contentEditable={props.isEditable} suppressContentEditableWarning={true}>
-                        {props.text}
+                    <p ref={textRef} onKeyPress={handleEditorChange} className="text" placeholder="escreva suas idaias..." dangerouslySetInnerHTML={{
+                        __html: Sanitize(props.text)
+                    }} contentEditable={props.isEditable} suppressContentEditableWarning={true}>
                     </p>
                 </Grid>
             </Grid>
@@ -262,6 +267,9 @@ export default function Note(props : {
             <style jsx>{`
                 .note{
                     &.loading{
+                        *{
+                            color: transparent !important;
+                        }
                         h1, .text{
                             &[placeholder]:empty:before{
                                 font-style: italic;
@@ -280,12 +288,12 @@ export default function Note(props : {
 
                         @keyframes FadeIn {
                             from {
-                            background-color: rgb(182, 182, 182);
+                                background-color: rgb(182, 182, 182);
                             }
                             
                             to {
-                            background-color: rgb(204, 202, 202);
-                        }
+                                background-color: rgb(204, 202, 202);
+                            }
                         }
                     }
                     &.isEditable{

@@ -1,5 +1,5 @@
 import { firestore } from "./firebase"
-import { collection, addDoc, deleteDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore"
+import { collection, addDoc, deleteDoc, doc, getDoc, getDocs, query, where, updateDoc } from "firebase/firestore"
 
 type Note = {
   title: string

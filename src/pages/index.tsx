@@ -10,7 +10,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 // COMPONENTS
 import Navbar from '@components/Navbar';
-import Note from '@components/Note';
+import MicroNote from '@components/MicroNote';
 
 // CONTEXTS
 import { useTheme } from '@context/ThemeContext';
@@ -18,91 +18,27 @@ import { useAuth } from '@context/AuthContext';
 import { useRouter } from 'next/router';
 
 // SERVICES
-import { getNote, createNote, deleteNote, updateNote } from '@services/NoteService';
+import { deleteNote, getNotes } from '@services/NoteService';
 
 // TYPES
 // import { UserType } from "@types/UserTypes";
 
 export default function Home() {
   const router = useRouter();
-  const { query: { slug } } = router;
 
   const {theme} = useTheme();
   const { login, user } = useAuth();
   
-  const [note, setNote] = useState({
-    title: '',
-    text: '',
+  const [notes, setNotes] = useState([{} as {
+    title: string;
+    text: string;
+    id: string;
     author: {
-      name: '',
-      id: ''
-    },
-    isSaved: true,
-    isEditable: false
-  });
-  const [isLoading, setIsLoading] = useState(false);
-
-  async function handleEditorUpdate(editor){
-    if(slug != "new") return;
-
-    if( (editor.title && editor.text) != "" && user.email){
-      const noteData = {
-        title: editor.title,
-        text: editor.text,
-        createdAt: new Date(),
-        author: {
-          name: user.name,
-          id: user.id
-        }
-      }
+      name: string;
+      id: string;
     }
-  }
-
-
-  async function handleSave(editor){
-    if((editor.title && editor.text) != "" && user.email){
-      if(slug == "new"){
-        const noteData = {
-          title: editor.title,
-          text: editor.text,
-          createdAt: new Date(),
-          author: {
-            name: user.name,
-            id: user.id
-          }
-        }
-        const noteId = await createNote(noteData);
-        router.push(`/${noteId}`);
-      }else{
-        const noteData = {
-          title: editor.title,
-          text: editor.text,
-        }
-        try{
-          updateNote(String(slug), noteData);
-          toast.success('Nota salva com sucesso!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-          });
-        }catch(err){
-          toast.error('Erro ao atualizar nota', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-          });
-        }
-      }
-    }
-  }
+  }]);
+  const [isLoading, setLoading] = useState(true);
 
   async function handleOnDelete(){
     try{
@@ -121,45 +57,17 @@ export default function Home() {
     }
   }
 
-  useEffect(()=>{ 
-    if(slug == "new"){
-      setIsLoading(false);
-      setNote({
-        title: "",
-        text: "",
-        isSaved: false,
-        author: {
-          name: user.name ? user.name : "",
-          id: user.id ? user.id : ""
-        },
-        isEditable: true
+  useEffect(() => {
+    setLoading(true);
+    if(user.id){
+      getNotes(user.id).then(notes => {
+        setNotes(notes);
+        setLoading(false);
       })
     }else{
-      const noteId = String(slug);
+      setLoading(false);
     }
-  }, [slug, user])
-
-  useEffect(()=>{
-    if(slug != "new"){
-      setIsLoading(true);
-      getNote(String(slug)).then(note => {
-        if(!note){
-          return;
-        }
-        setIsLoading(false);
-        setNote({
-          title: note.title,
-          text: note.text,
-          isSaved: true,
-          author: {
-            name: note.author.name,
-            id: note.author.id
-          },
-          isEditable: note.author.id == user.id ? true : false
-        })
-      });
-    }
-  }, [slug, user.email])
+  }, [user.id]);
 
   return (
     <>
@@ -181,22 +89,30 @@ export default function Home() {
       <div className={styles.navbar}>
         <Navbar />
       </div>
-      <Grid container justifyContent={"center"} className={styles.note_container}>
-        <Grid item xs={11} md={6} lg={5}>
-          <div className={styles.note}>
-            <Note title={note.title} text={note.text} author={{
-                name: note.author.name,
-                id: note.author.id
-              }}
-              isEditable={note.isEditable}
-              onEditorUpdate={handleEditorUpdate}
-              onDelete={handleOnDelete}
-              isSaved={note.isSaved}
-              onSave={handleSave}
-              isLoading={isLoading}
-              ></Note>
-          </div>
-        </Grid>
+      <Grid container justifyContent={"left"} className={styles.notes_container}>
+        {
+          isLoading == false ?
+              (notes.filter(note=> note.id && note.id != "").map(note => (
+                <div key={note.id}>
+                  <MicroNote title={note.title} text={note.text} url={`/${note.id}`} isLoading={false} />
+                </div>
+                
+              )))
+            :
+            (
+              <>
+                <div key="123">
+                  <MicroNote title={""} text={""} url={`/`} isLoading={true} />
+                </div>
+                <div key="4234">
+                  <MicroNote title={""} text={""} url={`/`} isLoading={true} />
+                </div>
+                <div key="5345">
+                  <MicroNote title={""} text={""} url={`/`} isLoading={true} />
+                </div>
+              </>
+            )
+        }
       </Grid>
       <ToastContainer
           position="top-right"
