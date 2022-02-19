@@ -13,6 +13,18 @@
     }
 }
 
+.notes_container{
+    margin: 0 auto;
+    
+    margin-top: 50px;
+    max-width: 1600px;
+    
+    justify-content: center !important;
+    @media screen and (min-width: $md) {
+        justify-content: start !important;
+    }
+}
+
 .home{
     min-height: 100vh;
 }
