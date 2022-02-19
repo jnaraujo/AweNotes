@@ -169,12 +169,19 @@ export default function Note(props : {
     }, [props.isSaved])
 
     function handleEditorChange(e) {
+        const maxLength = 999;
+
         const editorText = textRef.current?.value;
         const editorTitle = titleRef.current?.value;
         setEditor({
             title: editorTitle,
             text: editorText,
         });
+
+        const currentTextLength = e.target.outerText.length;
+        if (currentTextLength >= maxLength) {
+            e.preventDefault();
+        }
     }
 
     return (
@@ -233,10 +240,10 @@ export default function Note(props : {
                         </div>
                     </div>
                     <div className="line"></div>
-                    <p ref={textRef} onKeyPress={handleEditorChange} className="text" placeholder="escreva suas idaias..." dangerouslySetInnerHTML={{
+                    <div ref={textRef} onKeyPress={handleEditorChange} className="text" placeholder="escreva suas idaias..." dangerouslySetInnerHTML={{
                         __html: Sanitize(props.text)
                     }} contentEditable={props.isEditable} suppressContentEditableWarning={true}>
-                    </p>
+                    </div>
                 </Grid>
             </Grid>
             <AweModal modalInfo={modal} />

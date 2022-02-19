@@ -78,8 +78,7 @@ export default function Home() {
           title: editor.title,
           text: editor.text,
         }
-        try{
-          updateNote(String(slug), noteData);
+        updateNote(String(slug), noteData).then(() => {
           toast.success('Nota salva com sucesso!', {
             position: "top-right",
             autoClose: 5000,
@@ -89,7 +88,7 @@ export default function Home() {
             draggable: false,
             progress: undefined,
           });
-        }catch(err){
+        }).catch(() => {
           toast.error('Erro ao atualizar nota', {
             position: "top-right",
             autoClose: 5000,
@@ -99,7 +98,7 @@ export default function Home() {
             draggable: false,
             progress: undefined,
           });
-        }
+        });
       }
     }
   }
