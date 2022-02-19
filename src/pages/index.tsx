@@ -60,13 +60,23 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
+    let Timeout;
     if(user.id){
       getNotes(user.id).then(notes => {
-        setNotes(notes);
-        setLoading(false);
+        if(notes.length > 0){
+          setNotes(notes);
+          setLoading(false);
+        }else{
+          router.push("/new");
+        }
       })
     }else{
-      login();
+      Timeout = setTimeout(() => {
+        login();
+      }, 2000);
+    }
+    return () => {
+      clearTimeout(Timeout);
     }
   }, [user.id]);
 
