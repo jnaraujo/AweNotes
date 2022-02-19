@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
 
     const handleUser = (firebaseUser: FirebaseUser): void => {
         if (!firebaseUser) return;
-        const { uid, displayName, photoURL, email } = firebaseUser;
+        const { uid, displayName, photoURL } = firebaseUser;
     
         if (!displayName || !photoURL)
           throw new Error('Informações de usuário faltando.');
@@ -34,7 +34,6 @@ export function AuthProvider({ children }) {
         setUser({
             id: uid,
             name: displayName,
-            email: email,
             avatar: photoURL,
         });
     };

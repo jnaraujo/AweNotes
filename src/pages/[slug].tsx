@@ -45,7 +45,7 @@ export default function Home() {
   async function handleEditorUpdate(editor){
     if(slug != "new") return;
 
-    if( (editor.title && editor.text) != "" && user.email){
+    if( (editor.title && editor.text) != "" && user.id){
       const noteData = {
         title: editor.title,
         text: editor.text,
@@ -60,7 +60,7 @@ export default function Home() {
 
 
   async function handleSave(editor){
-    if((editor.title && editor.text) != "" && user.email){
+    if((editor.title && editor.text) != "" && user.id){
       if(slug == "new"){
         const noteData = {
           title: editor.title,
@@ -159,7 +159,7 @@ export default function Home() {
         })
       });
     }
-  }, [slug, user.email])
+  }, [slug, user.id])
 
   return (
     <>
@@ -186,7 +186,7 @@ export default function Home() {
           <div className={styles.note}>
             <Note title={note.title} text={note.text} author={{
                 name: note.author.name,
-                email: note.author.email
+                id: note.author.id
               }}
               isEditable={note.isEditable}
               onEditorUpdate={handleEditorUpdate}
