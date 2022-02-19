@@ -40,10 +40,11 @@ export default function Home() {
   }]);
   const [isLoading, setLoading] = useState(true);
 
-  async function handleOnDelete(){
+  async function handleOnDelete(id: string) {
     try{
-      const deleteNoteResult = await deleteNote(String(slug));
-      router.push('/');
+      const deleteNoteResult = await deleteNote(String(id));
+      setNotes(notes.filter(note => note.id !== id));
+      toast.success('Nota deletada com sucesso.');
     }catch(error){
       toast.error('Erro ao tentar apagar a nota', {
         position: "top-right",
@@ -65,7 +66,7 @@ export default function Home() {
         setLoading(false);
       })
     }else{
-      setLoading(false);
+      login();
     }
   }, [user.id]);
 

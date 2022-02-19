@@ -17,10 +17,12 @@
     margin: 0 auto;
     
     margin-top: 50px;
-    max-width: 1600px;
+    max-width: 1200px;
     
     justify-content: center !important;
-    @media screen and (min-width: $md) {
+
+    @media screen and (min-width: $lg) {
+        width: 70vw;
         justify-content: start !important;
     }
 }

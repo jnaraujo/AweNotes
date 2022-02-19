@@ -26,6 +26,7 @@ const MicroNoteDiv = styled.div<MicroNoteDivProps>`
 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 
+
     cursor: pointer;
 
     *{
@@ -37,11 +38,17 @@ const MicroNoteDiv = styled.div<MicroNoteDivProps>`
         font-size: 30px;
         margin-top: 16px;;
         color: ${props => props.theme.pallet.title};
+        max-height: 75px;
+        overflow: hidden;
     }
     p{
         font-size: 18px;
         margin-top: 8px;
         color: ${props => props.theme.pallet.text};
+
+        max-height: 150px;
+
+        overflow: hidden;
     }
 
     margin: 8px;
