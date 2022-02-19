@@ -10,12 +10,9 @@ import {
 
 import { auth } from "@services/firebase";
 
-type UserType = {
-    id: string;
-    name: string;
-    email: string;
-    avatar: string;
-}
+// @TYPES
+import { UserType } from "@types/UserTypes";
+
 type AuthState = {
     user: UserType | null;
     login(): Promise<void>
