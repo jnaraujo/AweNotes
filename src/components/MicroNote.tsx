@@ -18,8 +18,10 @@ type MicroNoteDivProps = {
 const MicroNoteDiv = styled.div<MicroNoteDivProps>`
     background-color: ${props => props.theme.pallet.microNoteBackground};
     /* border: 2px solid ${props => props.theme.pallet.primary}; */
-    width: 250px;
-    height: 250px;
+    width: 320px;
+    max-width: 95vw;;
+    height: 320px;
+    max-height: 95vw;
 
     padding: 16px;
     border-radius: 15px;
@@ -49,6 +51,11 @@ const MicroNoteDiv = styled.div<MicroNoteDivProps>`
         max-height: 150px;
 
         overflow: hidden;
+    }
+
+    @media screen and (min-width: 1200px){
+        width: 250px;
+        height: 250px;
     }
 
     margin: 8px;
