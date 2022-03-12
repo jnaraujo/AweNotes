@@ -14,6 +14,7 @@ interface ThemeInterface{
         red2: string;
 
         microNoteBackground: string;
+        microNoteBackgroundDark: string;
     }
     font: {
         family: string;
@@ -35,7 +36,8 @@ export const lightTheme : ThemeInterface = {
         red: "#ef233c",
         red2: "#d90429",
 
-        microNoteBackground: '#EDE0D4'
+        microNoteBackground: '#EDE0D4',
+        microNoteBackgroundDark: '#dbcec1'
     },
     font: {
         family: 'Inter',
@@ -47,7 +49,7 @@ export const darkTheme : ThemeInterface = {
     pallet: {
         title: '#F8F9FA',
 
-        text: '#F8F9FA',
+        text: '#ededed',
         textPlaceholder: '#C4C4C4',
 
         background: '#161616',
@@ -56,7 +58,8 @@ export const darkTheme : ThemeInterface = {
         red: "#ef233c",
         red2: "#d90429",
 
-        microNoteBackground: '#EDE0D4'
+        microNoteBackground: '#EDE0D4',
+        microNoteBackgroundDark: '#d6c7b8'
     },
     font: {
         family: 'Inter',
