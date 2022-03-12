@@ -39,14 +39,14 @@ const MicroNoteDiv = styled.div<MicroNoteDivProps>`
     h1{
         font-size: 30px;
         margin-top: 16px;;
-        color: ${props => props.theme.pallet.title};
+        color: #7A7A7A;
         max-height: 75px;
         overflow: hidden;
     }
     p{
         font-size: 18px;
         margin-top: 8px;
-        color: ${props => props.theme.pallet.text};
+        color: #979797;
 
         max-height: 150px;
 
@@ -60,10 +60,16 @@ const MicroNoteDiv = styled.div<MicroNoteDivProps>`
 
     margin: 8px;
 
+    
+
     &.isLoading{
+        *{
+            color: transparent;
+        }
+        animation: FadeIn 0.75s ease-in-out infinite alternate;
         h1, p{
             width: 100%;
-            animation: FadeIn 0.75s ease-in-out infinite alternate;
+            /* animation: FadeIn 0.75s ease-in-out infinite alternate; */
         }
         h1{
             min-height: 30px;
@@ -74,11 +80,11 @@ const MicroNoteDiv = styled.div<MicroNoteDivProps>`
     }
     @keyframes FadeIn {
         from {
-            background-color: rgb(182, 182, 182);
+            background-color: ${props => props.theme.pallet.microNoteBackground};
         }
         
         to {
-            background-color: rgb(204, 202, 202);
+            background-color: ${props => props.theme.pallet.microNoteBackgroundDark};
         }
     }
 `;
