@@ -120,25 +120,25 @@ export default function Note(props : {
     }
 
     useEffect(()=>{
-        window.
-    })
-
-    useEffect(()=>{
         if(isFirstLoad.current == true && props.isEditable == true){
             isFirstLoad.current = false;
             return;
         }
         const timeOutId = setTimeout(() => {
             // check if content has changed
-            if(props.isEditable && (isFirstLoad.current == false)){        
-                console.log("saved")
+            if(props.isEditable && (isFirstLoad.current == false)){  
+                if(props.onSave){
+                    props.onSave({
+                        title: titleRef.current.innerText,
+                        text: textRef.current.innerHTML,
+                    });
+                }
             }
-            // handleSave();
         }, 5000);
         return () => {
             clearTimeout(timeOutId)
         };
-    }, [titleRef.current?.innerText, textRef.current?.innerHTML, props.isEditable]);
+    }, [titleRef.current?.innerText, textRef.current?.innerHTML, props.isEditable, props.onSave]);
 
     useEffect(()=>{
         if(user){

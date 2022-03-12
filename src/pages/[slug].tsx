@@ -79,15 +79,15 @@ export default function Home() {
           text: editor.text,
         }
         updateNote(String(slug), noteData).then(() => {
-          toast.success('Nota salva com sucesso!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-          });
+          // toast.success('Nota salva com sucesso!', {
+          //   position: "top-right",
+          //   autoClose: 5000,
+          //   hideProgressBar: true,
+          //   closeOnClick: false,
+          //   pauseOnHover: true,
+          //   draggable: false,
+          //   progress: undefined,
+          // });
         }).catch(() => {
           toast.error('Erro ao atualizar nota', {
             position: "top-right",
