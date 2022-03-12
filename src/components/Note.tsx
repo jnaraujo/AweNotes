@@ -25,7 +25,7 @@ export default function Note(props : {
         id: string
     },
     isSaved: boolean,
-    isLoading?: boolean | false,
+    isLoading?: boolean | true,
     isEditable: boolean | false,
     onDelete?: () => void,
     onEditorUpdate?: (editor: {
@@ -43,6 +43,8 @@ export default function Note(props : {
     const [isSaved, setIsSaved] = useState(props.isSaved);
 
     const { user } = useAuth();
+
+    let isFirstLoad = useRef(true);
 
     const [editor, setEditor] = useState({
         title: props.title,
@@ -118,39 +120,25 @@ export default function Note(props : {
     }
 
     useEffect(()=>{
-        function beforeUnloadListener(event: any) {
-            event.preventDefault();
-            return event.returnValue = "Algumas alterações ainda não foram salvas.";
-        }
-        const editorData = {
-            title: titleRef.current.innerText,
-            text: textRef.current.innerHTML
-        }
+        window.
+    })
 
-        // if(window){
-        //     window.addEventListener("beforeunload", beforeUnloadListener, {capture: true});
-        // };
-
+    useEffect(()=>{
+        if(isFirstLoad.current == true && props.isEditable == true){
+            isFirstLoad.current = false;
+            return;
+        }
         const timeOutId = setTimeout(() => {
-
-            // if(window){
-            //     window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
-            // }
-
-            const editorData = {
-                title: titleRef.current.innerText,
-                text: textRef.current.innerHTML
+            // check if content has changed
+            if(props.isEditable && (isFirstLoad.current == false)){        
+                console.log("saved")
             }
-
-            setEditor(editorData);
-        }, 2000);
+            // handleSave();
+        }, 5000);
         return () => {
             clearTimeout(timeOutId)
-            if(window){
-                // window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
-            }
         };
-    }, [titleRef, textRef, isSaved]);
+    }, [titleRef.current?.innerText, textRef.current?.innerHTML, props.isEditable]);
 
     useEffect(()=>{
         if(user){
