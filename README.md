@@ -11,6 +11,7 @@
 </div>
 
 Um site de notas simples, minimalista e fácil onde você pode criar, modificar e compartilhar notas com qualquer pessoas, a qualquer hora 🤞
+
 Feito totalmente em React, NextJS e TypeScript 🥳
 
 ![git da interface do AweNotes](/public//gif_interface.webp)
